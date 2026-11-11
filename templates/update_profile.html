@@ -1,0 +1,173 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Update Profile</h2>
+
+            <p class="text-muted">
+                Update your personal information
+            </p>
+        </div>
+
+        <a href="{% url 'settings' %}"
+           class="btn btn-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back to Settings
+
+        </a>
+
+    </div>
+
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+
+                {{ message }}
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+        {% endfor %}
+    {% endif %}
+
+
+    <!-- Profile Form -->
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                <i class="bi bi-person-circle"></i>
+                Profile Information
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form method="POST"
+                  action="{% url 'update_profile' %}">
+
+                {% csrf_token %}
+
+
+                <!-- First Name -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        First Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="first_name"
+                        class="form-control"
+                        value="{{ request.user.first_name }}"
+                        placeholder="Enter first name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Last Name -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Last Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="last_name"
+                        class="form-control"
+                        value="{{ request.user.last_name }}"
+                        placeholder="Enter last name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        value="{{ request.user.email }}"
+                        placeholder="Enter email address"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Username -->
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ request.user.username }}"
+                        readonly
+                    >
+
+                    <small class="text-muted">
+                        Username cannot be changed.
+                    </small>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="bi bi-check-circle"></i>
+                    Save Changes
+
+                </button>
+
+
+                <a href="{% url 'settings' %}"
+                   class="btn btn-secondary ms-2">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
